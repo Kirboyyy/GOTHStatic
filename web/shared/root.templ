@@ -1,0 +1,25 @@
+package shared
+
+import . "blog/web"
+
+templ Root() {
+	<!DOCTYPE html>
+	<html lang="en" class="h-full dark">
+		<head>
+			<meta charset="UTF-8"/>
+			<title>{ PageName }</title>
+			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<meta name="robots" content="index, follow"/>
+			<meta name="revisit-after" content="7 days"/>
+			<meta name="language" content="English"/>
+			<link href="/static/tailwind.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
+		</head>
+		<body class="bg-background text-white">
+			@navbar(BlogName)
+			<main class="container text-center mt-4 mx-auto px-4">
+				{ children... }
+			</main>
+		</body>
+	</html>
+}

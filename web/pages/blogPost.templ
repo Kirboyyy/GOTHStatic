@@ -1,0 +1,16 @@
+package pages
+
+import "blog/web/blog"
+import "blog/model"
+import "blog/web/shared"
+
+templ BlogPost(post model.BlogPost) {
+	@shared.Root() {
+		<section>
+			@blog.Author(post.Author)
+		</section>
+		<section>
+			@blog.Post(post)
+		</section>
+	}
+}

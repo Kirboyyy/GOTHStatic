@@ -1,0 +1,14 @@
+package pages
+
+import (
+	"blog/web/shared"
+)
+
+templ HomePage() {
+	@shared.Root() {
+		<h1 class="text-3xl font-bold underline">
+			Go + templ + HTMX = ♥
+		</h1>
+		<h2 class="text-2xl">This is a GoTH Stack Test.</h2>
+	}
+}
