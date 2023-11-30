@@ -1,0 +1,26 @@
+package pages
+
+import "blog/web/components"
+import "blog/web/shared"
+import "blog/model"
+
+templ BlogPage(post model.Post, html string) {
+	@shared.Root(post.Description) {
+		<div class="container mx-auto px-4">
+			<div class="md:flex">
+				<a href="/">
+					<button class="bg-steel-gray-700 hover:bg-steel-gray-800 rounded-lg px-6 py-2 flex">
+						<img src="/assets/back.svg" alt="back"/>
+						Return to Overview
+					</button>
+				</a>
+				<div class="md:ml-4 mt-2 md:mt-0 flex flex-wrap content-center">
+					for _, tag := range post.Tags {
+						@components.Tag(tag)
+					}
+				</div>
+			</div>
+			@components.Post(html)
+		</div>
+	}
+}

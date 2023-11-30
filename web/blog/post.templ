@@ -1,8 +1,0 @@
-package blog
-
-import "blog/model"
-import "blog/web"
-
-templ Post(post model.BlogPost){
-    @web.Raw(post.HTML)
-}

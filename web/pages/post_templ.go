@@ -10,11 +10,11 @@ import "context"
 import "io"
 import "bytes"
 
-import "blog/web/blog"
-import "blog/model"
+import "blog/web/components"
 import "blog/web/shared"
+import "blog/model"
 
-func BlogPost(post model.BlogPost) templ.Component {
+func BlogPage(post model.Post, html string) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templ_7745c5c3_W.(*bytes.Buffer)
 		if !templ_7745c5c3_IsBuffer {
@@ -33,23 +33,34 @@ func BlogPost(post model.BlogPost) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"container mx-auto px-4\"><div class=\"md:flex\"><a href=\"/\"><button class=\"bg-steel-gray-700 hover:bg-steel-gray-800 rounded-lg px-6 py-2 flex\"><img src=\"/assets/back.svg\" alt=\"back\"> ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = blog.Author(post.Author).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Var3 := `Return to Overview`
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</section><section>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></a><div class=\"md:ml-4 mt-2 md:mt-0 flex flex-wrap content-center\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = blog.Post(post).Render(ctx, templ_7745c5c3_Buffer)
+			for _, tag := range post.Tags {
+				templ_7745c5c3_Err = components.Tag(tag).Render(ctx, templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</section>")
+			templ_7745c5c3_Err = components.Post(html).Render(ctx, templ_7745c5c3_Buffer)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -58,7 +69,7 @@ func BlogPost(post model.BlogPost) templ.Component {
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = shared.Root().Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = shared.Root(post.Description).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

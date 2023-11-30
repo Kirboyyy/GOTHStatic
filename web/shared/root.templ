@@ -2,9 +2,9 @@ package shared
 
 import . "blog/web"
 
-templ Root() {
+templ Root(metaDescription string) {
 	<!DOCTYPE html>
-	<html lang="en" class="h-full dark">
+	<html lang="en" class="dark">
 		<head>
 			<meta charset="UTF-8"/>
 			<title>{ PageName }</title>
@@ -12,14 +12,17 @@ templ Root() {
 			<meta name="robots" content="index, follow"/>
 			<meta name="revisit-after" content="7 days"/>
 			<meta name="language" content="English"/>
-			<link href="/static/tailwind.css" rel="stylesheet"/>
+			<meta name="description" content={metaDescription}/>
+			<link href="css/tailwind.css" rel="stylesheet"/>
+			<link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
 			<script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
 		</head>
 		<body class="bg-background text-white">
 			@navbar(BlogName)
-			<main class="container text-center mt-4 mx-auto px-4">
+			<main class="mt-4 mb-24">
 				{ children... }
 			</main>
+			@footer(PageName)
 		</body>
 	</html>
 }
